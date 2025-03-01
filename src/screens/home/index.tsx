@@ -1,0 +1,20 @@
+import { useNavigation } from '@react-navigation/native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+const Home = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View className="justify-center items-center flex-1 bg-yellow-200">
+      <Text className="text-6xl font-bold">Hello Home</Text>
+      <TouchableOpacity
+        className="bg-blue-500 p-2 rounded-lg mt-4"
+        onPress={() => navigation.navigate('Cash')}
+      >
+        <Text className="text-white m-5 text-2xl">Go to Cash</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default Home;
