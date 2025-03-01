@@ -1,9 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../screens/home';
-import Cash from '../screens/cash';
 import { NavigationContainer } from '@react-navigation/native';
 
+import Home from '../screens/home';
+import Cash from '../screens/cash';
+
 const Stack = createNativeStackNavigator();
+
 const Router = () => {
   return (
     <NavigationContainer>

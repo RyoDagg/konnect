@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { NavigationProps } from '../../types/navigation';
 
 const Home = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   return (
     <View className="justify-center items-center flex-1 bg-yellow-200">
