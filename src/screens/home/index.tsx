@@ -4,10 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-import logo from '../../../assets/logo.png';
-import personalGraph from '../../../assets/graph-personal.png';
-import shopGraph from '../../../assets/graph-shop.png';
-import linksImage from '../../../assets/links.png';
+import logo from '../../assets/logo.png';
+import personalGraph from '../../assets/home/graph-personal.png';
+import shopGraph from '../../assets/home/graph-shop.png';
+import linksImage from '../../assets/home/links.png';
 
 import { NavigationProps } from '../../types/navigation';
 
