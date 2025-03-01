@@ -96,8 +96,8 @@ const Home = () => {
           <Image source={personalGraph} className="w-full my-2" resizeMode="contain" />
 
           <View className="flex-row items-center gap-1 mt-auto">
-            <AntDesign name="arrowup" size={20} color="#7a7a7a" />
-            <Text className="text-lg text-gray-400">0.50% today</Text>
+            <AntDesign name="arrowdown" size={20} color="#7a7a7a" />
+            <Text className="text-lg text-gray-400">0.80% today</Text>
           </View>
         </TouchableOpacity>
 
