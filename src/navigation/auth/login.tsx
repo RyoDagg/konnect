@@ -24,7 +24,7 @@ const Login = () => {
     try {
       setLoading(true);
       const { ok, user, token } = await API.post('/user/login', { email, password });
-      if (!ok) throw new Error('Invalid credentials');
+      if (!ok) throw new Error('Error logging in');
 
       API.setToken(token);
       setUser(user);
