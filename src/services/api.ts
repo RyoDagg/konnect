@@ -47,6 +47,14 @@ class APIService {
   del(path: string) {
     return this.request('DELETE', path);
   }
+
+  async setToken(token: string) {
+    await AsyncStorage.setItem('token', token);
+  }
+
+  async removeToken() {
+    await AsyncStorage.removeItem('token');
+  }
 }
 
 const API = new APIService();

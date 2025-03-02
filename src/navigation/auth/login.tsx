@@ -3,21 +3,31 @@ import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } fro
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 
-import logo from '../../assets/logo.png';
 import API from '../../services/api';
+
+import logo from '../../assets/logo.png';
+
 import { NavigationProps } from '../../types/navigation';
+
+import { useStore } from '../../services/store';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState(__DEV__ ? 'alice@example.com' : '');
+  const [password, setPassword] = useState(__DEV__ ? 'password123' : '');
+
+  const { setUser } = useStore();
 
   const navigation = useNavigation<NavigationProps>();
 
   const handleLogin = async () => {
     try {
       setLoading(true);
-      const { data } = await API.get('/auth-login');
-      console.log('user-login=>', data);
-      // TODO: Save user data to store
+      const { ok, user, token } = await API.post('/user/login', { email, password });
+      if (!ok) throw new Error('Invalid credentials');
+
+      API.setToken(`Bearer ${token}`);
+      setUser(user);
     } catch (error) {
       console.log(error);
     } finally {
@@ -37,11 +47,15 @@ const Login = () => {
         className="w-full p-4 bg-white rounded-lg shadow-sm mb-4"
         placeholder="Email"
         keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         className="w-full p-4 bg-white rounded-lg shadow-sm mb-6"
         placeholder="Password"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
 
       <TouchableOpacity
