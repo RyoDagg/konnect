@@ -30,7 +30,7 @@ const Home = () => {
 
         setWallet(data);
       } catch (error) {
-        console.log('error');
+        console.log(error);
       }
     };
 
@@ -61,7 +61,7 @@ const Home = () => {
       </View>
 
       <View className="rounded-2xl mx-6 mt-6 p-6 bg-blue-950 shadow-lg shadow-blue-950/50">
-        <View className="flex-row justify-between items-center">
+        <View className="flex-row justify-between items-center mb-1">
           <Text className="text-xl font-semibold text-white">Cash Balance</Text>
           <TouchableOpacity className="flex-row items-center">
             <Text className="text-gray-200 text-sm">Account & Routing</Text>
@@ -70,23 +70,23 @@ const Home = () => {
         </View>
 
         <View className="flex-row items-baseline my-4">
-          <Text className="text-4xl font-bold text-lime-500">
+          <Text className="text-4xl font-bold text-lime-400">
             {wallet ? Math.floor(wallet.balance) : '0'}
           </Text>
-          <Text className="text-3xl font-bold text-lime-500">
+          <Text className="text-3xl font-bold text-lime-400">
             {wallet ? (wallet.balance % 1).toFixed(3).substring(1) : '.000'}
           </Text>
-          <Text className="text-lime-600 text-lg font-medium"> TND</Text>
+          <Text className="text-lime-500 text-lg font-medium"> TND</Text>
         </View>
 
         <View className="flex-row justify-between gap-4 mt-4">
-          <TouchableOpacity className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-500/10">
-            <Text className="text-lime-100 text-lg font-semibold">Cash In</Text>
+          <TouchableOpacity className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-900/20">
+            <Text className="text-lime-300 text-lg font-semibold">Cash In</Text>
             <AntDesign name="login" size={16} color="#d8f999" />
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-500/10">
-            <Text className="text-lime-100 text-lg font-semibold">Cash Out</Text>
+          <TouchableOpacity className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-900/20">
+            <Text className="text-lime-300 text-lg font-semibold">Cash Out</Text>
             <AntDesign name="logout" size={16} color="#d8f999" />
           </TouchableOpacity>
         </View>
