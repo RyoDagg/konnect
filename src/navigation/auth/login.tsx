@@ -28,7 +28,7 @@ const Login = () => {
       const { ok, user, token } = await API.post('/user/login', { email, password });
       if (!ok) throw new Error('Invalid credentials');
 
-      API.setToken(`Bearer ${token}`);
+      API.setToken(token);
       setUser(user);
     } catch (error) {
       console.log(error);

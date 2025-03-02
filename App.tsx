@@ -17,7 +17,9 @@ export default function App() {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const user = await API.get('/auth-me');
+        const { ok, user } = await API.get('/user/me');
+        if (!ok) throw new Error('Error fetching user');
+
         setUser(user);
       } catch (error) {
         console.log(error);
