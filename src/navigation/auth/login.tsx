@@ -3,18 +3,20 @@ import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } fro
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 
+import Icon from '@expo/vector-icons/Ionicons';
+
 import API from '../../services/api';
 
 import logo from '../../assets/logo.png';
 
 import { NavigationProps } from '../../types/navigation';
-
 import { useStore } from '../../services/store';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState(__DEV__ ? 'alice@example.com' : '');
   const [password, setPassword] = useState(__DEV__ ? 'password123' : '');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { setUser } = useStore();
 
@@ -50,13 +52,18 @@ const Login = () => {
         value={email}
         onChangeText={setEmail}
       />
-      <TextInput
-        className="w-full p-4 bg-white rounded-lg shadow-sm mb-6"
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+      <View className="w-full bg-white rounded-lg shadow-sm mb-6 flex-row items-center">
+        <TextInput
+          className="flex-1 p-4"
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} className="px-4">
+          <Icon name={showPassword ? 'eye-off' : 'eye'} size={24} color="gray" />
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity
         onPress={handleLogin}
