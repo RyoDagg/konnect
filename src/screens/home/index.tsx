@@ -13,10 +13,29 @@ import linksImage from '../../assets/home/links.png';
 import logo from '../../assets/logo.png';
 import personalGraph from '../../assets/home/graph-personal.png';
 import shopGraph from '../../assets/home/graph-shop.png';
+import { useEffect, useState } from 'react';
+import { Wallet } from '../../types/wallet';
 
 const Home = () => {
   const navigation = useNavigation<NavigationProps>();
   const { setUser } = useStore();
+
+  const [wallet, setWallet] = useState<Wallet | null>(null);
+
+  useEffect(() => {
+    const fetchWallet = async () => {
+      try {
+        const { ok, data } = await API.get('/wallet');
+        if (!ok) throw new Error('Error fetching wallet');
+
+        setWallet(data);
+      } catch (error) {
+        console.log('error');
+      }
+    };
+
+    fetchWallet();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -51,8 +70,12 @@ const Home = () => {
         </View>
 
         <View className="flex-row items-baseline my-4">
-          <Text className="text-4xl font-bold text-white">1855</Text>
-          <Text className="text-3xl font-bold text-white">.350</Text>
+          <Text className="text-4xl font-bold text-white">
+            {wallet ? Math.floor(wallet.balance) : '0'}
+          </Text>
+          <Text className="text-3xl font-bold text-white">
+            {wallet ? (wallet.balance % 1).toFixed(3).substring(1) : '.000'}
+          </Text>
           <Text className="text-gray-200 text-xl"> TND</Text>
         </View>
 
