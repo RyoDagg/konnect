@@ -1,120 +1,53 @@
+// Import necessary packages
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from './config';
 
-const LOGIN_PATH = '/login';
-
-interface Headers {
-  [key: string]: string;
-}
-
-interface Options {
-  headers?: Headers;
-}
-
 class APIService {
-  baseUrl: string;
-  headers: Headers;
-
-  constructor() {
-    this.baseUrl = API_URL;
-    this.headers = {
+  private async getHeaders() {
+    const token = await AsyncStorage.getItem('token');
+    return {
       'Content-Type': 'application/json',
-      Authorization: localStorage.getItem('token') ? `jwt ${localStorage.getItem('token')}` : '',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
   }
 
-  setToken(token: string): void {
-    // Set token in headers
-    localStorage.setItem('token', token);
-    this.headers['Authorization'] = `jwt ${token}`;
+  private async request(method: string, path: string, body?: any, params?: any) {
+    const headers = await this.getHeaders();
+    const url = new URL(`${API_URL}${path}`);
+    if (params) {
+      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+    }
+
+    const options: RequestInit = {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    };
+
+    const response = await fetch(url.toString(), options);
+    return response.json();
   }
 
-  removeToken(): void {
-    // Remove token from headers
-    localStorage.removeItem('token');
-    this.headers['Authorization'] = '';
+  get(path: string, params?: any) {
+    return this.request('GET', path, undefined, params);
   }
 
-  async post(endpoint: string, data: any, options: Options = {}): Promise<any> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'POST',
-      headers: {
-        ...this.headers,
-        ...options.headers,
-      },
-      body: JSON.stringify(data),
-      credentials: 'include',
-    });
-    if (response.status === 401) window.location.href = LOGIN_PATH;
-    return await response.json();
+  post(path: string, body: any, params?: any) {
+    return this.request('POST', path, body, params);
   }
 
-  async postFormData(endpoint: string, data: FormData): Promise<any> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'POST',
-      headers: {
-        Authorization: this.headers.Authorization,
-      },
-      body: data,
-      credentials: 'include',
-    });
-    if (response.status === 401) window.location.href = LOGIN_PATH;
-    return await response.json();
+  put(path: string, body: any) {
+    return this.request('PUT', path, body);
   }
 
-  async get(endpoint: string, options: Options = {}): Promise<any> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'GET',
-      headers: {
-        ...this.headers,
-        ...options.headers,
-      },
-      credentials: 'include',
-    });
-    if (response.status === 401) window.location.href = LOGIN_PATH;
-    return await response.json();
+  patch(path: string, body: any, params?: any) {
+    return this.request('PATCH', path, body, params);
   }
 
-  async patch(endpoint: string, data: any, options: Options = {}): Promise<any> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'PATCH',
-      headers: {
-        ...this.headers,
-        ...options.headers,
-      },
-      body: JSON.stringify(data),
-      credentials: 'include',
-    });
-    if (response.status === 401) window.location.href = LOGIN_PATH;
-    return await response.json();
-  }
-
-  async put(endpoint: string, data: any, options: Options = {}): Promise<any> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'PUT',
-      headers: {
-        ...this.headers,
-        ...options.headers,
-      },
-      body: JSON.stringify(data),
-      credentials: 'include',
-    });
-    if (response.status === 401) window.location.href = LOGIN_PATH;
-    return await response.json();
-  }
-
-  async delete(endpoint: string, options: Options = {}): Promise<any> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'DELETE',
-      headers: {
-        ...this.headers,
-        ...options.headers,
-      },
-      credentials: 'include',
-    });
-    if (response.status === 401) window.location.href = LOGIN_PATH;
-    return await response.json();
+  del(path: string) {
+    return this.request('DELETE', path);
   }
 }
 
-const api = new APIService();
-export default api;
+const API = new APIService();
+export default API;
