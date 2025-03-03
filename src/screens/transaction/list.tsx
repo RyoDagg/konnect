@@ -21,12 +21,10 @@ const Transactions = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch wallet data
         const walletResponse = await API.get('/wallet');
         if (!walletResponse.ok) throw new Error('Error fetching wallet');
         setWallet(walletResponse.data);
 
-        // Fetch transactions
         const transactionsResponse = await API.get('/transaction');
         if (!transactionsResponse.ok) throw new Error('Error fetching transactions');
         setTransactions(transactionsResponse.data);
@@ -51,7 +49,6 @@ const Transactions = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      {/* Header */}
       <View className="flex-row justify-between items-center mx-6 mt-6">
         <Image source={logo} className="w-12 h-12 rounded-lg" />
         <TouchableOpacity onPress={handleLogout}>
@@ -64,7 +61,6 @@ const Transactions = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Wallet Balance Card */}
       <View className="rounded-2xl mx-6 mt-6 p-4 bg-blue-950 shadow-lg shadow-blue-950/50">
         <Text className="text-xl font-semibold text-gray-200">Cash Balance</Text>
         <View className="flex-row items-baseline my-2">
@@ -78,10 +74,8 @@ const Transactions = () => {
         </View>
       </View>
 
-      {/* Title */}
       <Text className="text-3xl font-bold text-gray-800 mx-6 mt-6 mb-4">Transactions</Text>
 
-      {/* Transactions List */}
       <ScrollView className="flex-1 mx-6">
         {loading ? (
           <View className="items-center justify-center py-6">
