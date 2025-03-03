@@ -1,29 +1,32 @@
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import API from '../../services/api';
-import { useStore } from '../../services/store';
-import { NavigationProps } from '../../types/navigation';
 import { Transaction } from '../../types/transaction';
-
 import { Wallet } from '../../types/wallet';
+import { NavigationProps } from '../../types/navigation';
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const walletResponse = await API.get('/wallet');
-        if (!walletResponse.ok) throw new Error('Error fetching wallet');
-        setWallet(walletResponse.data);
+        if (walletResponse.ok) setWallet(walletResponse.data);
 
-        const transactionsResponse = await API.get('/transaction');
-        if (!transactionsResponse.ok) throw new Error('Error fetching transactions');
-        setTransactions(transactionsResponse.data);
+        const transactionsResponse = await API.get(`/transaction?limit=20&offset=0`);
+        if (transactionsResponse.ok) {
+          setTransactions(transactionsResponse.data);
+          setHasMore(transactionsResponse.data.length === 20);
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -33,6 +36,27 @@ const Transactions = () => {
 
     fetchData();
   }, []);
+
+  const loadMore = async () => {
+    if (loadingMore || !hasMore) return;
+
+    setLoadingMore(true);
+    const newOffset = offset + 20;
+
+    try {
+      const response = await API.get(`/transaction?limit=20&offset=${newOffset}`);
+      if (response.ok) {
+        setTransactions(prev => [...prev, ...response.data]);
+        setOffset(newOffset);
+        setHasMore(response.data.length === 20);
+      }
+    } catch (error) {
+      setHasMore(false);
+      console.log(error);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   return (
     <View className="flex-1 bg-gray-50">
@@ -61,9 +85,24 @@ const Transactions = () => {
             <Text className="text-gray-500">No transactions found.</Text>
           </View>
         ) : (
-          transactions.map(transaction => (
-            <TransactionItem key={transaction.id} transaction={transaction} />
-          ))
+          <>
+            {transactions.map(transaction => (
+              <TransactionItem key={transaction.id} transaction={transaction} />
+            ))}
+            {hasMore && (
+              <TouchableOpacity
+                onPress={loadMore}
+                disabled={loadingMore}
+                className="items-center justify-center py-4"
+              >
+                {loadingMore ? (
+                  <ActivityIndicator size="small" color="#3b82f6" />
+                ) : (
+                  <Text className="text-blue-500 font-semibold">Load More</Text>
+                )}
+              </TouchableOpacity>
+            )}
+          </>
         )}
       </ScrollView>
     </View>
