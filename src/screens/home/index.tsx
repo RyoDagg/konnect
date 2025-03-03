@@ -63,7 +63,10 @@ const Home = () => {
       <View className="rounded-2xl mx-6 mt-6 p-6 bg-blue-950 shadow-lg shadow-blue-950/50">
         <View className="flex-row justify-between items-center mb-1">
           <Text className="text-xl font-semibold text-white">Cash Balance</Text>
-          <TouchableOpacity className="flex-row items-center">
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Transactions')}
+            className="flex-row items-center"
+          >
             <Text className="text-gray-200 text-sm">Account & Routing</Text>
             <Entypo name="chevron-right" size={16} color="#DADADA" />
           </TouchableOpacity>

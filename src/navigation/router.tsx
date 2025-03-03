@@ -2,10 +2,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Home from '../screens/home';
-import Cash from '../screens/cash';
 import Login from './auth/login';
 import Register from './auth/register';
 import { useStore } from '../services/store';
+import Transactions from '../screens/transaction/list';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +13,7 @@ const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Cash" component={Cash} />
+      <Stack.Screen name="Transactions" component={Transactions} />
     </Stack.Navigator>
   );
 };
