@@ -9,21 +9,27 @@ import { NavigationProps } from '../../types/navigation';
 import { Transaction } from '../../types/transaction';
 
 import logo from '../../assets/logo.png';
+import { Wallet } from '../../types/wallet';
 
 const Transactions = () => {
-  const navigation = useNavigation<NavigationProps>();
   const { setUser } = useStore();
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [wallet, setWallet] = useState<Wallet | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const fetchData = async () => {
       try {
-        const { ok, data } = await API.get('/transaction');
-        if (!ok) throw new Error('Error fetching transactions');
+        // Fetch wallet data
+        const walletResponse = await API.get('/wallet');
+        if (!walletResponse.ok) throw new Error('Error fetching wallet');
+        setWallet(walletResponse.data);
 
-        setTransactions(data);
+        // Fetch transactions
+        const transactionsResponse = await API.get('/transaction');
+        if (!transactionsResponse.ok) throw new Error('Error fetching transactions');
+        setTransactions(transactionsResponse.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -31,7 +37,7 @@ const Transactions = () => {
       }
     };
 
-    fetchTransactions();
+    fetchData();
   }, []);
 
   const handleLogout = async () => {
@@ -56,6 +62,20 @@ const Transactions = () => {
             className="w-12 h-12 rounded-full border-2 border-white shadow-sm"
           />
         </TouchableOpacity>
+      </View>
+
+      {/* Wallet Balance Card */}
+      <View className="rounded-2xl mx-6 mt-6 p-4 bg-blue-950 shadow-lg shadow-blue-950/50">
+        <Text className="text-xl font-semibold text-gray-200">Cash Balance</Text>
+        <View className="flex-row items-baseline my-2">
+          <Text className="text-4xl font-bold text-lime-400">
+            {wallet ? Math.floor(wallet.balance) : '0'}
+          </Text>
+          <Text className="text-3xl font-bold text-lime-400">
+            {wallet ? (wallet.balance % 1).toFixed(3).substring(1) : '.000'}
+          </Text>
+          <Text className="text-lime-500 text-lg font-medium"> TND</Text>
+        </View>
       </View>
 
       {/* Title */}
@@ -92,7 +112,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
     <TouchableOpacity onPress={handlePress}>
       <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm shadow-gray-200">
         <View className="flex-row justify-between items-center">
-          <Text className="text-lg font-semibold text-gray-800">
+          <Text className="text-lg font-semibold text-blue-950">
             {transaction.type === 'send' ? 'Sent' : 'Requested'}
           </Text>
           <Text
