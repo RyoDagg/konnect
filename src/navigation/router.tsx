@@ -7,6 +7,7 @@ import Register from './auth/register';
 import { useStore } from '../services/store';
 import Transactions from '../screens/transaction/list';
 import TransactionDetails from '../screens/transaction/view';
+import CashOut from '../screens/transaction/send';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const AppNavigator = () => {
         options={{ title: 'Details' }}
         component={TransactionDetails}
       />
+      <Stack.Screen name="CashOut" options={{ title: 'Cash Out' }} component={CashOut} />
     </Stack.Navigator>
   );
 };

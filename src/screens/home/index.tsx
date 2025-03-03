@@ -88,7 +88,10 @@ const Home = () => {
             <AntDesign name="login" size={16} color="#d8f999" />
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-900/20">
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CashOut')}
+            className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-900/20"
+          >
             <Text className="text-lime-300 text-lg font-semibold">Cash Out</Text>
             <AntDesign name="logout" size={16} color="#d8f999" />
           </TouchableOpacity>
