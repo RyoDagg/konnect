@@ -6,6 +6,7 @@ import Login from './auth/login';
 import Register from './auth/register';
 import { useStore } from '../services/store';
 import Transactions from '../screens/transaction/list';
+import TransactionDetails from '../screens/transaction/view';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ const AppNavigator = () => {
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Transactions" component={Transactions} />
+      <Stack.Screen name="TransactionDetails" component={TransactionDetails} />
     </Stack.Navigator>
   );
 };

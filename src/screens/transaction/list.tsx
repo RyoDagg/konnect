@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Image, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 
@@ -73,44 +73,53 @@ const Transactions = () => {
           </View>
         ) : (
           transactions.map(transaction => (
-            <View
-              key={transaction.id}
-              className="bg-white rounded-2xl p-4 mb-4 shadow-sm shadow-gray-200"
-            >
-              <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold text-gray-800">
-                  {transaction.type === 'send' ? 'Sent' : 'Requested'}
-                </Text>
-                <Text
-                  className={`text-lg font-semibold ${
-                    transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
-                  }`}
-                >
-                  {transaction.type === 'send' ? '-' : '+'}
-                  {transaction.amount.toFixed(3)} TND
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between items-center mt-2">
-                <Text className="text-sm text-gray-500">
-                  {new Date(transaction.createdAt).toLocaleDateString()}
-                </Text>
-                <View className="flex-row items-center">
-                  <View
-                    className={`w-2 h-2 rounded-full ${
-                      transaction.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
-                    }`}
-                  />
-                  <Text className="text-sm text-gray-500 ml-2 capitalize">
-                    {transaction.status}
-                  </Text>
-                </View>
-              </View>
-            </View>
+            <TransactionItem key={transaction.id} transaction={transaction} />
           ))
         )}
       </ScrollView>
     </SafeAreaView>
+  );
+};
+
+const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
+  const navigation = useNavigation<NavigationProps>();
+
+  const handlePress = () => {
+    navigation.navigate('TransactionDetails', { transactionId: transaction.id });
+  };
+
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm shadow-gray-200">
+        <View className="flex-row justify-between items-center">
+          <Text className="text-lg font-semibold text-gray-800">
+            {transaction.type === 'send' ? 'Sent' : 'Requested'}
+          </Text>
+          <Text
+            className={`text-lg font-semibold ${
+              transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
+            }`}
+          >
+            {transaction.type === 'send' ? '-' : '+'}
+            {transaction.amount.toFixed(3)} TND
+          </Text>
+        </View>
+
+        <View className="flex-row justify-between items-center mt-2">
+          <Text className="text-sm text-gray-500">
+            {new Date(transaction.createdAt).toLocaleDateString()}
+          </Text>
+          <View className="flex-row items-center">
+            <View
+              className={`w-2 h-2 rounded-full ${
+                transaction.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
+              }`}
+            />
+            <Text className="text-sm text-gray-500 ml-2 capitalize">{transaction.status}</Text>
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
