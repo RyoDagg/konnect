@@ -75,7 +75,7 @@ const Transactions = () => {
 
       <Text className="text-3xl font-bold text-gray-800 mx-6 mt-6 mb-4">Transactions</Text>
 
-      <ScrollView className="flex-1 mx-6">
+      <ScrollView className="flex-1 px-6">
         {loading ? (
           <View className="items-center justify-center py-6">
             <Text className="text-gray-500">Loading transactions...</Text>
@@ -118,7 +118,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View className="bg-white rounded-2xl p-4 mb-4 shadow-sm shadow-gray-200">
+      <View className="bg-white rounded-xl p-4 mb-4 shadow shadow-blue-950/70">
         <View className="flex-row justify-between items-center">
           <Text className="text-lg font-semibold text-blue-950">
             {transaction.type === 'send' ? 'Sent' : 'Requested'}
