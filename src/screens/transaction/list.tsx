@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image, Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import API from '../../services/api';
@@ -8,12 +7,9 @@ import { useStore } from '../../services/store';
 import { NavigationProps } from '../../types/navigation';
 import { Transaction } from '../../types/transaction';
 
-import logo from '../../assets/logo.png';
 import { Wallet } from '../../types/wallet';
 
 const Transactions = () => {
-  const { setUser } = useStore();
-
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,29 +34,8 @@ const Transactions = () => {
     fetchData();
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      API.removeToken();
-      setUser(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="flex-row justify-between items-center mx-6 mt-6">
-        <Image source={logo} className="w-12 h-12 rounded-lg" />
-        <TouchableOpacity onPress={handleLogout}>
-          <Image
-            source={{
-              uri: 'https://media.licdn.com/dms/image/v2/C4E03AQEEZUPHzQoE0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1623677348445?e=2147483647&v=beta&t=sqDxbsOL6qHX3U123nNUJ1EWY6noIQIEN7DuCRBtSos',
-            }}
-            className="w-12 h-12 rounded-full border-2 border-white shadow-sm"
-          />
-        </TouchableOpacity>
-      </View>
-
+    <View className="flex-1 bg-gray-50">
       <View className="rounded-2xl mx-6 mt-6 p-4 bg-blue-950 shadow-lg shadow-blue-950/50">
         <Text className="text-xl font-semibold text-gray-200">Cash Balance</Text>
         <View className="flex-row items-baseline my-2">
@@ -91,7 +66,7 @@ const Transactions = () => {
           ))
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
