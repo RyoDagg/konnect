@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
+import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 
 import API from '../../services/api';
@@ -15,7 +14,6 @@ type RouteParams = {
 
 const TransactionDetails = () => {
   const route = useRoute<RouteProp<RouteParams>>();
-  const navigation = useNavigation();
   const { transactionId } = route.params;
 
   const [transaction, setTransaction] = useState<Transaction | null>(null);
@@ -40,96 +38,87 @@ const TransactionDetails = () => {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
+      <View className="flex-1 bg-gray-50 items-center justify-center">
         <ActivityIndicator size="large" color="#6B7280" />
-      </SafeAreaView>
+      </View>
     );
   }
 
   if (!transaction) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
+      <View className="flex-1 bg-gray-50 items-center justify-center">
         <Text className="text-gray-500">Transaction not found.</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="flex-row items-center p-4 bg-white shadow-sm shadow-gray-200">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={24} color="#6B7280" />
-        </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-800 ml-4">Transaction Details</Text>
-      </View>
-
-      <ScrollView className="flex-1 p-6">
-        <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
-          <Text className="text-lg font-semibold text-gray-500 mb-2">Transaction Type</Text>
-          <View className="flex-row items-center">
-            <View
-              className={`w-8 h-8 rounded-full items-center justify-center ${
-                transaction.type === 'send' ? 'bg-red-100' : 'bg-green-100'
-              }`}
-            >
-              <AntDesign
-                name={transaction.type === 'send' ? 'arrowup' : 'arrowdown'}
-                size={20}
-                color={transaction.type === 'send' ? '#EF4444' : '#10B981'}
-              />
-            </View>
-            <Text className="text-xl font-bold text-gray-800 ml-4">
-              {transaction.type === 'send' ? 'Sent' : 'Requested'}
-            </Text>
-          </View>
-        </View>
-
-        <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
-          <Text className="text-lg font-semibold text-gray-500 mb-2">Amount</Text>
-          <Text
-            className={`text-3xl font-bold ${
-              transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
+    <ScrollView className="flex-1 p-6">
+      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+        <Text className="text-lg font-semibold text-gray-500 mb-2">Transaction Type</Text>
+        <View className="flex-row items-center">
+          <View
+            className={`w-8 h-8 rounded-full items-center justify-center ${
+              transaction.type === 'send' ? 'bg-red-100' : 'bg-green-100'
             }`}
           >
-            {transaction.type === 'send' ? '-' : '+'}
-            {transaction.amount.toFixed(3)} TND
-          </Text>
-        </View>
-
-        <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
-          <Text className="text-lg font-semibold text-gray-500 mb-2">Status</Text>
-          <View className="flex-row items-center">
-            <View
-              className={`w-2 h-2 rounded-full ${
-                transaction.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
-              }`}
+            <AntDesign
+              name={transaction.type === 'send' ? 'arrowup' : 'arrowdown'}
+              size={20}
+              color={transaction.type === 'send' ? '#EF4444' : '#10B981'}
             />
-            <Text className="text-lg font-semibold text-gray-800 ml-2 capitalize">
-              {transaction.status}
-            </Text>
           </View>
-        </View>
-
-        <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
-          <Text className="text-lg font-semibold text-gray-500 mb-2">Date</Text>
-          <Text className="text-lg font-semibold text-gray-800">
-            {new Date(transaction.createdAt).toLocaleDateString()}
+          <Text className="text-xl font-bold text-gray-800 ml-4">
+            {transaction.type === 'send' ? 'Sent' : 'Requested'}
           </Text>
         </View>
+      </View>
 
-        <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200">
-          <Text className="text-lg font-semibold text-gray-500 mb-4">Parties Involved</Text>
-          <View className="mb-4">
-            <Text className="text-sm text-gray-500">Sender</Text>
-            <Text className="text-lg font-semibold text-gray-800">{transaction.senderId}</Text>
-          </View>
-          <View>
-            <Text className="text-sm text-gray-500">Receiver</Text>
-            <Text className="text-lg font-semibold text-gray-800">{transaction.receiverId}</Text>
-          </View>
+      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+        <Text className="text-lg font-semibold text-gray-500 mb-2">Amount</Text>
+        <Text
+          className={`text-3xl font-bold ${
+            transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
+          }`}
+        >
+          {transaction.type === 'send' ? '-' : '+'}
+          {transaction.amount.toFixed(3)} TND
+        </Text>
+      </View>
+
+      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+        <Text className="text-lg font-semibold text-gray-500 mb-2">Status</Text>
+        <View className="flex-row items-center">
+          <View
+            className={`w-2 h-2 rounded-full ${
+              transaction.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
+            }`}
+          />
+          <Text className="text-lg font-semibold text-gray-800 ml-2 capitalize">
+            {transaction.status}
+          </Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+
+      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+        <Text className="text-lg font-semibold text-gray-500 mb-2">Date</Text>
+        <Text className="text-lg font-semibold text-gray-800">
+          {new Date(transaction.createdAt).toLocaleDateString()}
+        </Text>
+      </View>
+
+      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200">
+        <Text className="text-lg font-semibold text-gray-500 mb-4">Parties Involved</Text>
+        <View className="mb-4">
+          <Text className="text-sm text-gray-500">Sender</Text>
+          <Text className="text-lg font-semibold text-gray-800">{transaction.senderId}</Text>
+        </View>
+        <View>
+          <Text className="text-sm text-gray-500">Receiver</Text>
+          <Text className="text-lg font-semibold text-gray-800">{transaction.receiverId}</Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 

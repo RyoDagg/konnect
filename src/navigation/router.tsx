@@ -12,10 +12,14 @@ const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: true }}>
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Transactions" component={Transactions} />
-      <Stack.Screen name="TransactionDetails" component={TransactionDetails} />
+      <Stack.Screen
+        name="TransactionDetails"
+        options={{ title: 'Details' }}
+        component={TransactionDetails}
+      />
     </Stack.Navigator>
   );
 };
