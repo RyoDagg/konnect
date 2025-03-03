@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
@@ -25,6 +25,7 @@ const TransactionDetails = () => {
         const { ok, data } = await API.get(`/transaction/${transactionId}`);
         if (!ok) throw new Error('Error fetching transaction details');
 
+        console.log(data);
         setTransaction(data);
       } catch (error) {
         console.log(error);
@@ -54,7 +55,7 @@ const TransactionDetails = () => {
 
   return (
     <ScrollView className="flex-1 p-6">
-      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+      <View className="bg-white rounded-xl p-6 shadow-sm shadow-blue-950/70 mb-2">
         <Text className="text-lg font-semibold text-gray-500 mb-2">Transaction Type</Text>
         <View className="flex-row items-center">
           <View
@@ -74,7 +75,7 @@ const TransactionDetails = () => {
         </View>
       </View>
 
-      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+      <View className="bg-white rounded-xl p-6 shadow-sm shadow-blue-950/70 mb-2">
         <Text className="text-lg font-semibold text-gray-500 mb-2">Amount</Text>
         <Text
           className={`text-3xl font-bold ${
@@ -86,7 +87,7 @@ const TransactionDetails = () => {
         </Text>
       </View>
 
-      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+      <View className="bg-white rounded-xl p-6 shadow-sm shadow-blue-950/70 mb-2">
         <Text className="text-lg font-semibold text-gray-500 mb-2">Status</Text>
         <View className="flex-row items-center">
           <View
@@ -100,22 +101,42 @@ const TransactionDetails = () => {
         </View>
       </View>
 
-      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200 mb-6">
+      <View className="bg-white rounded-xl p-6 shadow-sm shadow-blue-950/70 mb-2">
         <Text className="text-lg font-semibold text-gray-500 mb-2">Date</Text>
         <Text className="text-lg font-semibold text-gray-800">
           {new Date(transaction.createdAt).toLocaleDateString()}
         </Text>
       </View>
 
-      <View className="bg-white rounded-2xl p-6 shadow-sm shadow-gray-200">
+      <View className="bg-white rounded-xl p-6 shadow-sm shadow-blue-950/70">
         <Text className="text-lg font-semibold text-gray-500 mb-4">Parties Involved</Text>
+
         <View className="mb-4">
           <Text className="text-sm text-gray-500">Sender</Text>
-          <Text className="text-lg font-semibold text-gray-800">{transaction.senderId}</Text>
+          {transaction.sender ? (
+            <>
+              <Text className="text-lg font-semibold text-gray-800">
+                {transaction.sender.username}
+              </Text>
+              <Text className="text-sm text-gray-500">{transaction.sender.email}</Text>
+            </>
+          ) : (
+            <Text className="text-lg font-semibold text-gray-800">Unknown Sender</Text>
+          )}
         </View>
+
         <View>
           <Text className="text-sm text-gray-500">Receiver</Text>
-          <Text className="text-lg font-semibold text-gray-800">{transaction.receiverId}</Text>
+          {transaction.receiver ? (
+            <>
+              <Text className="text-lg font-semibold text-gray-800">
+                {transaction.receiver.username}
+              </Text>
+              <Text className="text-sm text-gray-500">{transaction.receiver.email}</Text>
+            </>
+          ) : (
+            <Text className="text-lg font-semibold text-gray-800">Unknown Receiver</Text>
+          )}
         </View>
       </View>
     </ScrollView>

@@ -1,3 +1,5 @@
+import { User } from './userTypes';
+
 export type Transaction = {
   id: string;
   type: 'send' | 'request';
@@ -8,4 +10,6 @@ export type Transaction = {
   senderId: string;
   receiverId: string;
   WalletId: string;
+  sender: User;
+  receiver: User;
 };
