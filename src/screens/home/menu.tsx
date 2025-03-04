@@ -51,9 +51,6 @@ const Menu = () => {
 
   return (
     <View className="flex-1 bg-gray-50">
-      {/* Menu Title */}
-
-      {/* Menu Items */}
       <View className="rounded-2xl bg-gray-50 p-0 shadow-sm space-y-1 shadow-gray-200">
         {menuItems.map(item => (
           <TouchableOpacity
@@ -61,13 +58,10 @@ const Menu = () => {
             onPress={item.onPress}
             className="flex-row items-center p-4 border-b-2 border-gray-800 last:border-b-0"
           >
-            {/* Icon */}
             <View className="w-8 h-8 items-center justify-center">{item.icon}</View>
 
-            {/* Label */}
             <Text className="text-lg font-semibold text-gray-800 ml-4">{item.label}</Text>
 
-            {/* Chevron Icon */}
             <View className="ml-auto">
               <AntDesign name="right" size={20} color="#D1D5DB" />
             </View>
