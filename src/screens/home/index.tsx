@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -13,7 +13,7 @@ import linksImage from '../../assets/home/links.png';
 import logo from '../../assets/logo.png';
 import personalGraph from '../../assets/home/graph-personal.png';
 import shopGraph from '../../assets/home/graph-shop.png';
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Wallet } from '../../types/wallet';
 
 const Home = () => {
@@ -22,20 +22,22 @@ const Home = () => {
 
   const [wallet, setWallet] = useState<Wallet | null>(null);
 
-  useEffect(() => {
-    const fetchWallet = async () => {
-      try {
-        const { ok, data } = await API.get('/wallet');
-        if (!ok) throw new Error('Error fetching wallet');
+  const fetchWallet = useCallback(async () => {
+    try {
+      const { ok, data } = await API.get('/wallet');
+      if (!ok) throw new Error('Error fetching wallet');
 
-        setWallet(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchWallet();
+      setWallet(data);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchWallet();
+    }, [fetchWallet]),
+  );
 
   const handleLogout = async () => {
     try {
