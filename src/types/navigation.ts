@@ -8,6 +8,7 @@ export type RootStackParamList = {
   TransactionDetails: { transactionId: string };
   CashOut: undefined;
   CashIn: undefined;
+  Menu: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

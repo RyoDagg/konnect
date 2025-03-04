@@ -7,7 +7,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 
 import API from '../../services/api';
-import { useStore } from '../../services/store';
 import { NavigationProps } from '../../types/navigation';
 import { Wallet } from '../../types/wallet';
 
@@ -18,7 +17,6 @@ import shopGraph from '../../assets/home/graph-shop.png';
 
 const Home = () => {
   const navigation = useNavigation<NavigationProps>();
-  const { setUser } = useStore();
 
   const [wallet, setWallet] = useState<Wallet | null>(null);
 
@@ -39,20 +37,11 @@ const Home = () => {
     }, [fetchWallet]),
   );
 
-  const handleLogout = async () => {
-    try {
-      API.removeToken();
-      setUser(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       <View className="flex-row justify-between items-center mx-6 mt-6">
         <Image source={logo} className="w-12 h-12 rounded-lg" />
-        <TouchableOpacity onPress={handleLogout}>
+        <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
           <Image
             source={{
               uri: 'https://media.licdn.com/dms/image/v2/C4E03AQEEZUPHzQoE0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1623677348445?e=2147483647&v=beta&t=sqDxbsOL6qHX3U123nNUJ1EWY6noIQIEN7DuCRBtSos',
