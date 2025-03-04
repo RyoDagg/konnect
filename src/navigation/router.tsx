@@ -7,6 +7,7 @@ import Register from '../screens/auth/register';
 import Transactions from '../screens/transaction/list';
 import TransactionDetails from '../screens/transaction/view';
 import CashOut from '../screens/transaction/send';
+import CashIn from '../screens/transaction/request';
 
 import { useStore } from '../services/store';
 
@@ -23,6 +24,7 @@ const AppNavigator = () => {
         component={TransactionDetails}
       />
       <Stack.Screen name="CashOut" options={{ title: 'Cash Out' }} component={CashOut} />
+      <Stack.Screen name="CashIn" options={{ title: 'Cash In' }} component={CashIn} />
     </Stack.Navigator>
   );
 };

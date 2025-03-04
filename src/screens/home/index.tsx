@@ -85,7 +85,10 @@ const Home = () => {
         </View>
 
         <View className="flex-row justify-between gap-4 mt-4">
-          <TouchableOpacity className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-900/20">
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CashIn')}
+            className="flex-1 flex-row justify-center items-center gap-2 p-4 rounded-full bg-lime-900/20"
+          >
             <Text className="text-lime-300 text-lg font-semibold">Cash In</Text>
             <AntDesign name="login" size={16} color="#d8f999" />
           </TouchableOpacity>
