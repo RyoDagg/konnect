@@ -3,11 +3,16 @@ import { View, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { User } from '../../types/userTypes';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from '../../types/navigation';
+import API from '../../services/api';
 
 const CashOutScreen = () => {
   const [amount, setAmount] = useState('');
   const [selectedContact, setSelectedContact] = useState<User | null>(null);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  const navigation = useNavigation<NavigationProps>();
 
   // Dummy contact data (10 contacts)
   const contacts = [
@@ -39,10 +44,21 @@ const CashOutScreen = () => {
     setSelectedContact(contact);
   };
 
-  const handleSendMoney = () => {
+  const handleSendMoney = async () => {
     if (!selectedContact || !amount) return alert('Please select a contact and enter an amount.');
+    try {
+      const { ok, data, error } = await API.post('/transaction', {
+        amount,
+        receiverId: selectedContact.id,
+        type: 'send',
+      });
+      if (!ok) throw new Error(error);
 
-    alert(`Sent ${amount} TND to ${selectedContact.username}`);
+      navigation.replace('TransactionDetails', { transactionId: data.id });
+    } catch (error) {
+      console.log(error);
+      alert('Error sending money');
+    }
   };
 
   return (
