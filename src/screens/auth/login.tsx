@@ -1,13 +1,14 @@
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
 
 import Icon from '@expo/vector-icons/Ionicons';
 
 import API from '../../services/api';
-import { NavigationProps } from '../../types/navigation';
 import { useStore } from '../../services/store';
+
+import { NavigationProps } from '../../types/navigation';
 
 import logo from '../../assets/logo.png';
 

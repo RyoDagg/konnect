@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { User } from '../../types/userTypes';
+
 import { useNavigation } from '@react-navigation/native';
+
+import { User } from '../../types/userTypes';
 import { NavigationProps } from '../../types/navigation';
 import API from '../../services/api';
 

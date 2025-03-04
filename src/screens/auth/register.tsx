@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
+
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import logo from '../../assets/logo.png';
 import { NavigationProps } from '../../types/navigation';
+
+import logo from '../../assets/logo.png';
 
 const Register = () => {
   const navigation = useNavigation<NavigationProps>();

@@ -1,6 +1,7 @@
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -8,13 +9,12 @@ import Entypo from '@expo/vector-icons/Entypo';
 import API from '../../services/api';
 import { useStore } from '../../services/store';
 import { NavigationProps } from '../../types/navigation';
+import { Wallet } from '../../types/wallet';
 
 import linksImage from '../../assets/home/links.png';
 import logo from '../../assets/logo.png';
 import personalGraph from '../../assets/home/graph-personal.png';
 import shopGraph from '../../assets/home/graph-shop.png';
-import { useState, useCallback } from 'react';
-import { Wallet } from '../../types/wallet';
 
 const Home = () => {
   const navigation = useNavigation<NavigationProps>();

@@ -1,7 +1,6 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import API from '../../services/api';
 import { Transaction } from '../../types/transaction';

@@ -1,13 +1,14 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from '../screens/home';
 import Login from '../screens/auth/login';
 import Register from '../screens/auth/register';
-import { useStore } from '../services/store';
 import Transactions from '../screens/transaction/list';
 import TransactionDetails from '../screens/transaction/view';
 import CashOut from '../screens/transaction/send';
+
+import { useStore } from '../services/store';
 
 const Stack = createNativeStackNavigator();
 
