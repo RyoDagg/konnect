@@ -17,6 +17,7 @@ You can run this app using Expo Go without the need to create a build.
 - **Request Money Screen (Cash In)**: Allows users to request money from others.
 - **Transactions Screen**: Shows a list of all transactions.
 - **Transaction Details Screen**: Provides detailed information about a specific transaction.
+- **Logout Feature (From menu screen)**: Allows users to log out of their accounts from the menu screen.
 
 ## How to Run
 
