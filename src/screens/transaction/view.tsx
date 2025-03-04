@@ -78,7 +78,7 @@ const TransactionDetails = () => {
         <Text className="text-lg font-semibold text-gray-500 mb-2">Amount</Text>
         <Text
           className={`text-3xl font-bold ${
-            transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
+            transaction.type === 'send' ? 'text-red-700' : 'text-green-700'
           }`}
         >
           {transaction.type === 'send' ? '-' : '+'}

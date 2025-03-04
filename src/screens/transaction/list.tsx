@@ -124,7 +124,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
           </Text>
           <Text
             className={`text-lg font-semibold ${
-              transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
+              transaction.type === 'send' ? 'text-red-700' : 'text-green-700'
             }`}
           >
             {transaction.type === 'send' ? '-' : '+'}
