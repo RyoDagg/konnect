@@ -25,7 +25,6 @@ const TransactionDetails = () => {
         const { ok, data } = await API.get(`/transaction/${transactionId}`);
         if (!ok) throw new Error('Error fetching transaction details');
 
-        console.log(data);
         setTransaction(data);
       } catch (error) {
         console.log(error);
