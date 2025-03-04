@@ -42,7 +42,7 @@ const Register = () => {
         <Text className="text-white text-lg font-semibold">Sign Up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Login')} className="items-center">
+      <TouchableOpacity onPress={() => navigation.replace('Login')} className="items-center">
         <Text className="text-gray-500 text-base">
           Already have an account? <Text className="text-green-600 font-semibold">Sign In</Text>
         </Text>

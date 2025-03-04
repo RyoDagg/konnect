@@ -79,7 +79,7 @@ const Login = () => {
         )}
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Register')} className="items-center">
+      <TouchableOpacity onPress={() => navigation.replace('Register')} className="items-center">
         <Text className="text-gray-500 text-base">
           Don't have an account? <Text className="text-blue-600 font-semibold">Sign Up</Text>
         </Text>
