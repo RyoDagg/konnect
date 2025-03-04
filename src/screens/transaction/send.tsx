@@ -55,7 +55,13 @@ const CashOut = () => {
       });
       if (!ok) throw new Error(error);
 
-      navigation.replace('TransactionDetails', { transactionId: data.id });
+      navigation.reset({
+        index: 1,
+        routes: [
+          { name: 'Main' },
+          { name: 'TransactionDetails', params: { transactionId: data.id } },
+        ],
+      });
     } catch (error) {
       console.log(error);
       alert('Error sending money');
