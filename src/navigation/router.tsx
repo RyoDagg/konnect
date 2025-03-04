@@ -10,21 +10,19 @@ import CashOut from '../screens/transaction/send';
 import CashIn from '../screens/transaction/request';
 
 import { useStore } from '../services/store';
+import BottomTabs from '../components/BottomTabs';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen name="Transactions" component={Transactions} />
+    <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: true }}>
+      <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
       <Stack.Screen
         name="TransactionDetails"
         options={{ title: 'Details' }}
         component={TransactionDetails}
       />
-      <Stack.Screen name="CashOut" options={{ title: 'Cash Out' }} component={CashOut} />
-      <Stack.Screen name="CashIn" options={{ title: 'Cash In' }} component={CashIn} />
     </Stack.Navigator>
   );
 };
