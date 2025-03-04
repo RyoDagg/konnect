@@ -8,7 +8,7 @@ import { User } from '../../types/userTypes';
 import { NavigationProps } from '../../types/navigation';
 import API from '../../services/api';
 
-const CashOutScreen = () => {
+const CashOut = () => {
   const [amount, setAmount] = useState('');
   const [selectedContact, setSelectedContact] = useState<User | null>(null);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -171,4 +171,4 @@ const CashOutScreen = () => {
   );
 };
 
-export default CashOutScreen;
+export default CashOut;
